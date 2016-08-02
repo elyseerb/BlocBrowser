@@ -130,6 +130,13 @@
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [self updateButtonsAndTitle];
+    
+    UIAlertController *alert = [[UIAlertController alloc] initWithTitle:@"Welcome"
+                                                    message:@"Hello and welcome!"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Thanks!"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *) navigation withError:(NSError *)error {
@@ -153,6 +160,8 @@
     
     [self updateButtonsAndTitle];
 }
+
+
 
 #pragma mark - Miscellaneous
 
