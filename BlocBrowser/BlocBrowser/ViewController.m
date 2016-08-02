@@ -76,7 +76,19 @@
     
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Welcome"
+                                                                   message:@"Hello and welcome!"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {}];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
+
+
 
 - (void) viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
@@ -130,13 +142,6 @@
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [self updateButtonsAndTitle];
-    
-    UIAlertController *alert = [[UIAlertController alloc] initWithTitle:@"Welcome"
-                                                    message:@"Hello and welcome!"
-                                                   delegate:nil
-                                          cancelButtonTitle:@"Thanks!"
-                                          otherButtonTitles:nil];
-    [alert show];
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *) navigation withError:(NSError *)error {
