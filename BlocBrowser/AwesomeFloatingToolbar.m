@@ -70,8 +70,8 @@
     [self addGestureRecognizer:self.panGesture];
     
     return self;
+    
 }
-
 
 
 - (void) tapFired:(UITapGestureRecognizer *)recognizer {
@@ -158,7 +158,5 @@
         label.alpha = enabled ? 1.0 : 0.25;
     }
 }
-
-
 
 @end

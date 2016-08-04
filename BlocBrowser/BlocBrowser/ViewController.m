@@ -193,6 +193,8 @@
     if (CGRectContainsRect(self.view.bounds, potentialNewFrame)) {
         toolbar.frame = potentialNewFrame;
     }
+    
 }
+
 
 @end
