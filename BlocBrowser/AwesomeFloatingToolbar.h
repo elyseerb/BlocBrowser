@@ -26,5 +26,10 @@
 - (void) setEnabled:(BOOL)enabled forButtonWithTitle:(NSString *)title;
 
 @property (nonatomic, weak) id <AwesomeFloatingToolbarDelegate> delegate;
+@property(nonatomic, readonly) UIGestureRecognizerState state;
+@property(nonatomic) CFTimeInterval minimumPressDuration;
+@property(nonatomic) NSUInteger numberOfTouchesRequired;
+@property(nonatomic) NSUInteger numberOfTapsRequired;
+@property(nonatomic) CGFloat allowableMovement;
 
 @end

@@ -16,6 +16,8 @@
 @property (nonatomic, weak) UILabel *currentLabel;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGesture;
+@property (nonatomic, strong) UIPinchGestureRecognizer *pinchGesture;
+
 
 @end
 
@@ -66,11 +68,23 @@
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFired:)];
     // #2
     [self addGestureRecognizer:self.tapGesture];
+    
     self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panFired:)];
     [self addGestureRecognizer:self.panGesture];
     
+    self.pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchDetected:)];
+    [self addGestureRecognizer:self.pinchGesture];
+    
     return self;
     
+}
+
+- (void) pinchDetected: (UIPinchGestureRecognizer *)event {
+    if (event.state == 1) {
+        
+    }
+    
+    NSLog(@"event has been detected, here is the state %i", event.state);
 }
 
 
@@ -96,10 +110,19 @@
         if ([self.delegate respondsToSelector:@selector(floatingToolbar:didTryToPanWithOffset:)]) {
             [self.delegate floatingToolbar:self didTryToPanWithOffset:translation];
         }
-        
+    
         [recognizer setTranslation:CGPointZero inView:self];
     }
 }
+
+- (void) longPress:(UILongPressGestureRecognizer *)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateChanged) {
+        CGPoint location = [recognizer locationInView:self];
+        UIView *pressedView = [self hitTest:location withEvent:nil];
+        
+    }
+    
+    }
 
 - (void) layoutSubviews {
     // set the frames for the 4 labels
@@ -158,5 +181,6 @@
         label.alpha = enabled ? 1.0 : 0.25;
     }
 }
+
 
 @end
