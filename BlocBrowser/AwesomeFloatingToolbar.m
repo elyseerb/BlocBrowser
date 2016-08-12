@@ -12,16 +12,18 @@
 
 @property (nonatomic, strong) NSArray *currentTitles;
 @property (nonatomic, strong) NSArray *colors;
-@property (nonatomic, strong) NSArray *labels;
+@property (nonatomic, strong) NSArray<UILabel*> *labels;
 @property (nonatomic, weak) UILabel *currentLabel;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGesture;
 @property (nonatomic, strong) UIPinchGestureRecognizer *pinchGesture;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGesture;
 
 
 @end
 
 @implementation AwesomeFloatingToolbar
+NSInteger offset = 0;
 
 - (instancetype) initWithFourTitles:(NSArray *)titles {
     // First, call the superclass (UIView)'s initializer, to make sure we do all that setup first.
@@ -36,7 +38,7 @@
                         [UIColor colorWithRed:222/255.0 green:165/255.0 blue:164/255.0 alpha:1],
                         [UIColor colorWithRed:255/255.0 green:179/255.0 blue:71/255.0 alpha:1]];
         
-        NSMutableArray *labelsArray = [[NSMutableArray alloc] init];
+        NSMutableArray<UILabel*> *labelsArray = [[NSMutableArray alloc] init];
         
         // Make the 4 labels
         for (NSString *currentTitle in self.currentTitles) {
@@ -75,8 +77,19 @@
     self.pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchDetected:)];
     [self addGestureRecognizer:self.pinchGesture];
     
+    self.longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [self addGestureRecognizer:self.longPressGesture];
     return self;
     
+}
+
+- (void)rotateColors {
+    offset++;
+    
+    // UIColor *colorForThisLabel = [self.colors objectAtIndex:currentTitleIndex];
+    for (NSInteger labelNum = 0; labelNum < self.labels.count; labelNum++) {
+        self.labels[labelNum].backgroundColor = [self.colors objectAtIndex:(labelNum+offset)%self.labels.count];
+    }
 }
 
 - (void) pinchDetected: (UIPinchGestureRecognizer *)event {
@@ -116,13 +129,13 @@
 }
 
 - (void) longPress:(UILongPressGestureRecognizer *)recognizer {
-    if (recognizer.state == UIGestureRecognizerStateChanged) {
-        CGPoint location = [recognizer locationInView:self];
-        UIView *pressedView = [self hitTest:location withEvent:nil];
-        
+    if (recognizer.state == UIGestureRecognizerStateRecognized) {
+        if ([self.delegate respondsToSelector:@selector(floatingToolbarLongPressed:)]) {
+            [self.delegate floatingToolbarLongPressed:self];
+        }
     }
     
-    }
+}
 
 - (void) layoutSubviews {
     // set the frames for the 4 labels

@@ -16,6 +16,7 @@
 
 - (void) floatingToolbar:(AwesomeFloatingToolbar *)toolbar didSelectButtonWithTitle:(NSString *)title;
 - (void) floatingToolbar:(AwesomeFloatingToolbar *)toolbar didTryToPanWithOffset:(CGPoint)offset;
+- (void) floatingToolbarLongPressed:(AwesomeFloatingToolbar *)toolbar;
 
 @end
 
@@ -24,12 +25,8 @@
 - (instancetype) initWithFourTitles:(NSArray *)titles;
 
 - (void) setEnabled:(BOOL)enabled forButtonWithTitle:(NSString *)title;
+-(void) rotateColors;
 
 @property (nonatomic, weak) id <AwesomeFloatingToolbarDelegate> delegate;
-@property(nonatomic, readonly) UIGestureRecognizerState state;
-@property(nonatomic) CFTimeInterval minimumPressDuration;
-@property(nonatomic) NSUInteger numberOfTouchesRequired;
-@property(nonatomic) NSUInteger numberOfTapsRequired;
-@property(nonatomic) CGFloat allowableMovement;
 
 @end

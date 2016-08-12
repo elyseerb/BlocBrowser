@@ -147,6 +147,10 @@
     }
 }
 
+- (void)floatingToolbarLongPressed:(AwesomeFloatingToolbar *)toolbar {
+    [toolbar rotateColors];
+}
+
 
 #pragma mark - Miscellaneous
 
